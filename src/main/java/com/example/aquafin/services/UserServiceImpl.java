@@ -21,10 +21,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(UserDto userDto) {
+        // Default role is "USER", can be overridden with provided role
+        String role = userDto.getRole() != null ? userDto.getRole() : "USER"; 
+
         User user = new User(
             userDto.getEmail(),
             passwordEncoder.encode(userDto.getPassword()),
-            userDto.getFullname()
+            userDto.getFullname(),
+            role
         );
         return userRepository.save(user);
     }

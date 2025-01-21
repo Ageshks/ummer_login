@@ -8,8 +8,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 
 @Configuration
 @EnableWebSecurity
@@ -22,33 +20,33 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(request -> request
-                .requestMatchers("/login", "/register", "/registration").permitAll()  
-                .requestMatchers("/dashboard").authenticated()  
-                .anyRequest().authenticated()  
-            )
-            .formLogin(form -> form
+        http.csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/login", "/register", "/registration").permitAll()  // Public pages
+                .antMatchers("/superadmin/**").hasRole("SUPER_ADMIN")  // Access for SUPER_ADMIN only
+                .antMatchers("/admin/**").hasRole("ADMIN")            // Access for ADMIN only
+                .antMatchers("/user/**").hasRole("USER")              // Access for USER only
+                .anyRequest().authenticated()                         // Authenticated access for other URLs
+            .and()
+            .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/dashboard", true)  
-                .failureUrl("/login?error=true")  
-                .permitAll()  
-            )
-            .logout(logout -> logout
+                .defaultSuccessUrl("/dashboard", true)
+                .failureUrl("/login?error=true")
+                .permitAll()
+            .and()
+            .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")  
+                .logoutSuccessUrl("/login?logout")
                 .permitAll()
-            )
-            .sessionManagement(session -> session
+            .and()
+            .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .maximumSessions(1)  
-                .expiredUrl("/login?expired")  
-            );
+                .maximumSessions(1)
+                .expiredUrl("/login?expired");
+
         return http.build();
     }
 }
