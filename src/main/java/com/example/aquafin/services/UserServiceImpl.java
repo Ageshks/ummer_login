@@ -21,16 +21,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(UserDto userDto) {
-        // Default role is "USER", can be overridden with provided role
-        String role = userDto.getRole() != null ? userDto.getRole() : "USER"; 
-
-        User user = new User(
-            userDto.getEmail(),
-            passwordEncoder.encode(userDto.getPassword()),
-            userDto.getFullname(),
-            role
-        );
+        User user = new User(userDto.getEmail(),passwordEncoder.encode(userDto.getPassword()), userDto.getRole() ,userDto.getFullname());
+        user.setRole("USER");
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getUsersByRole(String role){
+        return userRepository.findByRole(role);
     }
 
     @Override
@@ -41,5 +39,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void deleteUserById(Long id){
+        userRepository.deleteById(id);
     }
 }

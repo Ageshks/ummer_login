@@ -4,9 +4,17 @@ public class UserDto {
     private String email;
     private String password;
     private String fullname;
-    private String role;  // Optional role field
+    private String role;
+    
+     // Getters and Setters
+    public String getRole() {
+        return role;
+    }
 
-    // Getters and Setters
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -29,13 +37,5 @@ public class UserDto {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
