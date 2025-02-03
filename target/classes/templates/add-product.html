@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0e2433;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #45b6fe;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #0e2433;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #45b6fe;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #45b6fe;
+            background-color: #2a4150;
+            color: white;
+        }
+
+        button {
+            background-color: #45b6fe;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2a98d7;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Super Admin - Add Product</h1>
+    </div>
+
+    <div class="container">
+        <h2>Add a New Product</h2>
+        
+        <form th:action="@{/super-admin/add-product}" th:object="${product}" method="post">
+            <div>
+                <label for="name">Product Name</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Enter product name" required/>
+            </div>
+            <div>
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" th:field="*{quantity}" placeholder="Enter product quantity" required/>
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="number" id="price" th:field="*{price}" placeholder="Enter product price" required/>
+            </div>
+
+            <button type="submit">Add Product</button>
+        </form>
+
+        <div class="error" th:if="${param.error != null}">
+            <p>There was an error adding the product. Please try again.</p>
+        </div>
+    </div>
+
+    <div>
+        <a th:href="@{/super-admin/view-products}">Back to Product List</a>
+    </div>
+
+</body>
+</html>

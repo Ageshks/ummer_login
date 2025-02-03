@@ -37,10 +37,10 @@ public class SecurityConfig {
         http.csrf(c -> c.disable())
     
         .authorizeHttpRequests(request -> request
-                .requestMatchers("/superadmin-page").hasAuthority("SUPER_ADMIN")  
+                .requestMatchers("/super-admin").hasAuthority("SUPER_ADMIN")  
                 .requestMatchers("/admin-page").hasAuthority("ADMIN")              
                 .requestMatchers("/dashboard").hasAuthority("USER")                
-                .requestMatchers("/register", "/css/**").permitAll()           
+                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated())                                     
          
             
