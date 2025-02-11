@@ -42,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
      return productRepository.findById(id).orElse(null);
     }
 
+
+
 //     @Override
 //     public List<Product> getAvailableProducts(){
 //      return productRepository.findByAvailableProductsGreaterThan(0);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,32 +74,18 @@
 <body>
     <div class="cart-container">
         <h1>Shopping Cart</h1>
-    
+        
         <table>
-            <thead>
-                <tr>
-                    <th>orderId</th>
-                    <th>Email</th>
-                    <th>ProductID</th>
-                    <th>Quantity</th>
-                    <th>TotalPrice</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><tr th:each="order : ${orders}">
-                    <td th:text="${order.id}"></td>
-                    <td th:text="${order.email}"></td>
-                    <td th:text="${order.product}"></td>
-                    <td th:text="${order.quantity}"></td>
-                    <td th:text="${order.totalprice}"></td>
-                    
-                    
-                </tr>
-            </tbody>
+            <tr th:each="order : ${orders}"> 
+                <td th:text="${order.product.name}"></td>
+                <td th:text="${order.quantity}"></td>
+                <td th:text="${order.totalPrice}"></td>
+            </tr>
         </table>
+        
     
         <div class="total-price">
-            <strong>Total Price: $90.00</strong>
+            <strong></strong>
         </div>
     
         <button class="btn-checkout">Proceed to Checkout</button>
